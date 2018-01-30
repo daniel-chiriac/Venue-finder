@@ -48,6 +48,11 @@ public class RecommendedVenuesAdapter extends RecyclerView.Adapter<RecommendedVe
         return venues.size();
     }
 
+    public void clear() {
+        venues.clear();
+        notifyDataSetChanged();
+    }
+
     public static class VenuesViewHolder extends RecyclerView.ViewHolder {
 
         TextView ratingView;
