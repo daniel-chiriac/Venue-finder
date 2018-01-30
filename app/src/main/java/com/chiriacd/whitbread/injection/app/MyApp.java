@@ -3,7 +3,6 @@ package com.chiriacd.whitbread.injection.app;
 import android.app.Activity;
 import android.app.Application;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 
 import javax.inject.Inject;
 
@@ -20,7 +19,6 @@ public class MyApp extends Application implements HasActivityInjector{
     public void onCreate() {
         super.onCreate();
         DaggerAppComponent.builder().build().inject(this);
-        Fresco.initialize(this);
     }
 
     @Override
