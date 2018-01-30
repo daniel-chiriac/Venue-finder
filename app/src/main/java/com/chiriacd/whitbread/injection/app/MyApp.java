@@ -10,7 +10,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
-public class MyApp extends Application implements HasActivityInjector{
+public class MyApp extends Application implements HasActivityInjector {
 
     @Inject
     DispatchingAndroidInjector<Activity> dispatchingActivityInjector;
@@ -18,7 +18,10 @@ public class MyApp extends Application implements HasActivityInjector{
     @Override
     public void onCreate() {
         super.onCreate();
-        DaggerAppComponent.builder().build().inject(this);
+        DaggerAppComponent.builder()
+                .contextModule(new ContextModule(this))
+                .build()
+                .inject(this);
     }
 
     @Override

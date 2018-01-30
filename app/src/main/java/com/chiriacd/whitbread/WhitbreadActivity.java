@@ -15,24 +15,23 @@ import com.chiriacd.whitbread.foursquare.api.VenueRecommendations;
 import com.chiriacd.whitbread.whitbread.R;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
-import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 
 public class WhitbreadActivity extends Activity {
 
     private static final String TAG = WhitbreadActivity.class.getName();
-    @Inject
-    FoursquareService foursquareService;
+
+    @Inject FoursquareService foursquareService;
 
     private EditText placeInput;
     private RecyclerView recyclerView;
@@ -57,7 +56,10 @@ public class WhitbreadActivity extends Activity {
                             .map(item-> item.venue)
                             .toList()
                             .doOnSuccess(this::onItemsRetrieved)
-                            .doOnError(throwable -> Log.i(TAG, throwable.toString()))
+                            .onErrorReturn(throwable -> {
+                                Log.i(TAG, throwable.toString());
+                                return new ArrayList<>();
+                            })
                             .subscribeOn(Schedulers.io())
                             .subscribe();
                     Log.i(TAG, c.toString());
@@ -68,7 +70,6 @@ public class WhitbreadActivity extends Activity {
         venuesAdapter.setData(venues);
         Log.i(TAG, "items received");
     }
-
 
     private void initUI(Context context) {
         setContentView(R.layout.whitbread_activity);

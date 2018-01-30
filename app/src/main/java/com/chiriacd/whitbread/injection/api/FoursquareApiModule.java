@@ -1,5 +1,7 @@
 package com.chiriacd.whitbread.injection.api;
 
+import android.content.Context;
+
 import com.chiriacd.whitbread.foursquare.FoursquareService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -7,6 +9,7 @@ import java.io.IOException;
 
 import dagger.Module;
 import dagger.Provides;
+import okhttp3.Cache;
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -21,7 +24,9 @@ public class FoursquareApiModule {
 
     private static final String API_URL = "https://api.foursquare.com/v2/";
     private static final String CLIENT_ID = "Y3FWP0BNWLQE2JENWRIELO0GPAPIFPHUJPZTSOZVOKLIHV0G";
-    private static final String CLEINT_SECRET = "KJLLOL2K1A2DM4J1GJVUE00CQHJZLQT11CEWH5HVNY2B1JUI";//todo should be obfuscated
+    private static final String CLEINT_SECRET = "KJLLOL2K1A2DM4J1GJVUE00CQHJZLQT11CEWH5HVNY2B1JUI";
+
+    private final int cacheSize = 10 * 1024 * 1024; // 10 MB
 
     @Provides
     public Retrofit provideRetrofit(OkHttpClient httpClient) {
@@ -34,10 +39,15 @@ public class FoursquareApiModule {
     }
 
     @Provides
-    OkHttpClient httpClient(Interceptor interceptor) {
+    OkHttpClient httpClient(Interceptor interceptor, Cache cache) {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(interceptor);
+        httpClient.cache(cache);
         return httpClient.build();
+    }
+
+    @Provides Cache cache(Context context) {
+        return new Cache(context.getCacheDir(), cacheSize);
     }
 
     @Provides
