@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.chiriacd.whitbread.whitbread">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name="com.chiriacd.whitbread.injection.app.MyApp"
         android:allowBackup="true"

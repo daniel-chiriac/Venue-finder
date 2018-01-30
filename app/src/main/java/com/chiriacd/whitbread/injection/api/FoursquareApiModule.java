@@ -42,23 +42,21 @@ public class FoursquareApiModule {
 
     @Provides
     Interceptor interceptor() {
-        return new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request original = chain.request();
-                HttpUrl originalHttpUrl = original.url();
+        return chain -> {
+            Request original = chain.request();
+            HttpUrl originalHttpUrl = original.url();
 
-                HttpUrl url = originalHttpUrl.newBuilder()
-                        .addQueryParameter("client_id", CLIENT_ID)
-                        .addQueryParameter("client_secret", CLEINT_SECRET)
-                        .build();
+            HttpUrl url = originalHttpUrl.newBuilder()
+                    .addQueryParameter("client_id", CLIENT_ID)
+                    .addQueryParameter("client_secret", CLEINT_SECRET)
+                    .addQueryParameter("v", "20180130")
+                    .build();
 
-                Request request = original.newBuilder()
-                        .url(url)
-                        .build();
+            Request request = original.newBuilder()
+                    .url(url)
+                    .build();
 
-                return chain.proceed(request);
-            }
+            return chain.proceed(request);
         };
     }
 
