@@ -7,9 +7,11 @@ public class VenueRecommendations {
 
     Response response;
 
+    public List<Group> getResponse() {
+        return response.groups;
+    }
+
     public static class Response {
-
         List<Group> groups;
-
     }
 }
