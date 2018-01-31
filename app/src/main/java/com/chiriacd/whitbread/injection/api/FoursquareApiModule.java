@@ -3,9 +3,8 @@ package com.chiriacd.whitbread.injection.api;
 import android.content.Context;
 
 import com.chiriacd.whitbread.foursquare.FoursquareService;
+import com.chiriacd.whitbread.whitbread.BuildConfig;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-
-import java.io.IOException;
 
 import dagger.Module;
 import dagger.Provides;
@@ -14,7 +13,6 @@ import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -23,8 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class FoursquareApiModule {
 
     private static final String API_URL = "https://api.foursquare.com/v2/";
-    private static final String CLIENT_ID = "Y3FWP0BNWLQE2JENWRIELO0GPAPIFPHUJPZTSOZVOKLIHV0G";
-    private static final String CLEINT_SECRET = "KJLLOL2K1A2DM4J1GJVUE00CQHJZLQT11CEWH5HVNY2B1JUI";
 
     private final int cacheSize = 10 * 1024 * 1024; // 10 MB
 
@@ -57,8 +53,8 @@ public class FoursquareApiModule {
             HttpUrl originalHttpUrl = original.url();
 
             HttpUrl url = originalHttpUrl.newBuilder()
-                    .addQueryParameter("client_id", CLIENT_ID)
-                    .addQueryParameter("client_secret", CLEINT_SECRET)
+                    .addQueryParameter("client_id", BuildConfig.client_id)
+                    .addQueryParameter("client_secret", BuildConfig.client_secret)
                     .addQueryParameter("v", "20180130")
                     .build();
 

@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
-
+def foursquarePropertiesFile = rootProject.file("foursquare.properties")
+def foursquareProperties = new Properties()
+foursquareProperties.load(new FileInputStream(foursquarePropertiesFile))
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -9,6 +11,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'client_id', foursquareProperties['client_id']
+        buildConfigField 'String', 'client_secret', foursquareProperties['client_secret']
     }
     buildTypes {
         release {
