@@ -1,16 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chiriacd.whitbread.whitbread">
+    package="com.chiriacd.venuefinder">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:name="com.chiriacd.whitbread.injection.app.MyApp"
+        android:name="com.chiriacd.venuefinder.injection.app.MyApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.chiriacd.whitbread.WhitbreadActivity" >
+        <activity android:name="com.chiriacd.venuefinder.VenueFinderActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

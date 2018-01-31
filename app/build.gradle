@@ -5,7 +5,7 @@ foursquareProperties.load(new FileInputStream(foursquarePropertiesFile))
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.chiriacd.whitbread"
+        applicationId "com.chiriacd.venuefinder"
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1

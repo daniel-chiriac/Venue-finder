@@ -1,7 +1,7 @@
-package com.chiriacd.whitbread.foursquare;
+package com.chiriacd.venuefinder.foursquare;
 
 
-import com.chiriacd.whitbread.foursquare.api.VenueRecommendations;
+import com.chiriacd.venuefinder.foursquare.api.VenueRecommendations;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

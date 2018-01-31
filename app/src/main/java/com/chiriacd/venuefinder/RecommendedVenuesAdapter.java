@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread;
+package com.chiriacd.venuefinder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,8 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chiriacd.whitbread.foursquare.api.GroupItem;
-import com.chiriacd.whitbread.whitbread.R;
+import com.chiriacd.venuefinder.foursquare.api.GroupItem;
 
 import java.util.ArrayList;
 import java.util.List;

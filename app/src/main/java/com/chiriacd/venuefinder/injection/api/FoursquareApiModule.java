@@ -1,9 +1,9 @@
-package com.chiriacd.whitbread.injection.api;
+package com.chiriacd.venuefinder.injection.api;
 
 import android.content.Context;
 
-import com.chiriacd.whitbread.foursquare.FoursquareService;
-import com.chiriacd.whitbread.whitbread.BuildConfig;
+import com.chiriacd.venuefinder.BuildConfig;
+import com.chiriacd.venuefinder.foursquare.FoursquareService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import dagger.Module;

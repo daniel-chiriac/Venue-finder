@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Whitbread.iml" filepath="$PROJECT_DIR$/Whitbread.iml" />
+      <module fileurl="file://$PROJECT_DIR$/VenueFinder.iml" filepath="$PROJECT_DIR$/VenueFinder.iml" />
+      <module fileurl="file://C:\Users\DanielC\AndroidStudioProjects\VenueFinder\Whitbread.iml" filepath="C:\Users\DanielC\AndroidStudioProjects\VenueFinder\Whitbread.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

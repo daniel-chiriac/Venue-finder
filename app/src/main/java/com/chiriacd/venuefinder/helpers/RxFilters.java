@@ -1,8 +1,8 @@
-package com.chiriacd.whitbread.helpers;
+package com.chiriacd.venuefinder.helpers;
 
 
-import com.chiriacd.whitbread.foursquare.api.Group;
-import com.chiriacd.whitbread.foursquare.api.local.KnownGroupTypes;
+import com.chiriacd.venuefinder.foursquare.api.Group;
+import com.chiriacd.venuefinder.foursquare.api.local.KnownGroupTypes;
 
 public class RxFilters {
 

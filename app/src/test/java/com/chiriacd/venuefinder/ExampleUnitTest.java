@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread.whitbread;
+package com.chiriacd.venuefinder;
 
 import org.junit.Test;
 

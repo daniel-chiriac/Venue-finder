@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread.whitbread;
+package com.chiriacd.venuefinder;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.chiriacd.whitbread.whitbread", appContext.getPackageName());
+        assertEquals("com.chiriacd.venuefinder", appContext.getPackageName());
     }
 }

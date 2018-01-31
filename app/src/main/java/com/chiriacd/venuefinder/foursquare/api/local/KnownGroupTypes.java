@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread.foursquare.api.local;
+package com.chiriacd.venuefinder.foursquare.api.local;
 
 
 public enum KnownGroupTypes {

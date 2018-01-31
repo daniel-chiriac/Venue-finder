@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread.injection.app;
+package com.chiriacd.venuefinder.injection.app;
 
 import android.content.Context;
 

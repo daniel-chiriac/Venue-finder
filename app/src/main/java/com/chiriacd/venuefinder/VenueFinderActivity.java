@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread;
+package com.chiriacd.venuefinder;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,13 +11,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.chiriacd.whitbread.foursquare.FoursquareService;
-import com.chiriacd.whitbread.foursquare.api.Group;
-import com.chiriacd.whitbread.foursquare.api.GroupItem;
-import com.chiriacd.whitbread.foursquare.api.VenueRecommendations;
-import com.chiriacd.whitbread.foursquare.api.local.KnownGroupTypes;
-import com.chiriacd.whitbread.helpers.RxFilters;
-import com.chiriacd.whitbread.whitbread.R;
+import com.chiriacd.venuefinder.foursquare.FoursquareService;
+import com.chiriacd.venuefinder.foursquare.api.Group;
+import com.chiriacd.venuefinder.foursquare.api.GroupItem;
+import com.chiriacd.venuefinder.foursquare.api.VenueRecommendations;
+import com.chiriacd.venuefinder.foursquare.api.local.KnownGroupTypes;
+import com.chiriacd.venuefinder.helpers.RxFilters;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.ArrayList;
@@ -32,9 +31,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class WhitbreadActivity extends Activity {
+public class VenueFinderActivity extends Activity {
 
-    private static final String TAG = WhitbreadActivity.class.getName();
+    private static final String TAG = VenueFinderActivity.class.getName();
 
     private static final String VENUES_KEY = "venues";
     private static final String LOCATION_KEY = "location";
@@ -87,7 +86,7 @@ public class WhitbreadActivity extends Activity {
     }
 
     private void initUI(Context context) {
-        setContentView(R.layout.whitbread_activity);
+        setContentView(R.layout.venuefinder_activity);
         loadingIndicator = findViewById(R.id.loading_indicator);
         locationEditText = findViewById(R.id.place_input);
         noResultsView = findViewById(R.id.no_results_view);

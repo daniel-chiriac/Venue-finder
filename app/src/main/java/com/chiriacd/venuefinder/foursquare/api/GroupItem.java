@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread.foursquare.api;
+package com.chiriacd.venuefinder.foursquare.api;
 
 
 import android.os.Parcel;

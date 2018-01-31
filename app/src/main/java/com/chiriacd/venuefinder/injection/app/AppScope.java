@@ -1,4 +1,4 @@
-package com.chiriacd.whitbread.injection.app;
+package com.chiriacd.venuefinder.injection.app;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
