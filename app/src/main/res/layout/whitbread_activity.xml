@@ -5,22 +5,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <android.support.design.widget.TextInputLayout
+    <EditText
+        android:id="@+id/place_input"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/place_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-
-    </android.support.design.widget.TextInputLayout>
+        android:layout_height="wrap_content"
+        android:hint="@string/location_input_hint" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <TextView
+            android:text="@string/no_results"
+            android:id="@+id/no_results_view"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
         <ProgressBar
             android:id="@+id/loading_indicator"

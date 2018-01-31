@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Whitbread</string>
+    <string name="app_name">Venue finder</string>
+    <string name="location_input_hint">Enter location</string>
+    <string name="no_results">No results</string>
 </resources>

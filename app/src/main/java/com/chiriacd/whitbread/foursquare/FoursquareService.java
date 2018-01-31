@@ -10,5 +10,5 @@ import retrofit2.http.Query;
 public interface FoursquareService {
 
     @GET("venues/explore")
-    Observable<VenueRecommendations> getItem(@Query("near") String near);
+    Observable<VenueRecommendations> getRecommendedVenues(@Query("near") String near);
 }

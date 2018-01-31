@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.chiriacd.whitbread.foursquare.api.GroupItem;
 import com.chiriacd.whitbread.whitbread.R;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,18 +16,21 @@ import java.util.List;
 public class RecommendedVenuesAdapter extends RecyclerView.Adapter<RecommendedVenuesAdapter.VenuesViewHolder> {
 
     private List<GroupItem.Venue> venues;
+    private String location;
 
     public RecommendedVenuesAdapter() {
+        location = "";
         venues = new ArrayList<>();
     }
 
-    public RecommendedVenuesAdapter(List<GroupItem.Venue> venues) {
-        this.venues = venues;
-    }
-
-    public void setData(List<GroupItem.Venue> venues) {
+    public void setData(String location, List<GroupItem.Venue> venues) {
+        this.location = location;
         this.venues = venues;
         notifyDataSetChanged();
+    }
+
+    public List<GroupItem.Venue> getData() {
+        return venues;
     }
 
     @Override
@@ -51,6 +52,10 @@ public class RecommendedVenuesAdapter extends RecyclerView.Adapter<RecommendedVe
     public void clear() {
         venues.clear();
         notifyDataSetChanged();
+    }
+
+    public String getLocation() {
+        return location;
     }
 
     public static class VenuesViewHolder extends RecyclerView.ViewHolder {
