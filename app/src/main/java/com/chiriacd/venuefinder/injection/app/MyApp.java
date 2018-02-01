@@ -3,6 +3,7 @@ package com.chiriacd.venuefinder.injection.app;
 import android.app.Activity;
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 import javax.inject.Inject;
 
@@ -22,6 +23,7 @@ public class MyApp extends Application implements HasActivityInjector {
                 .contextModule(new ContextModule(this))
                 .build()
                 .inject(this);
+        Fresco.initialize(this);
     }
 
     @Override

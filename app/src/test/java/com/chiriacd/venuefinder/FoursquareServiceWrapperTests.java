@@ -4,8 +4,9 @@ import com.chiriacd.venuefinder.foursquare.FoursquareService;
 import com.chiriacd.venuefinder.foursquare.FoursquareServiceWrapper;
 import com.chiriacd.venuefinder.foursquare.api.Group;
 import com.chiriacd.venuefinder.foursquare.api.GroupItem;
+import com.chiriacd.venuefinder.foursquare.api.Venue;
 import com.chiriacd.venuefinder.foursquare.api.VenueRecommendations;
-import com.chiriacd.venuefinder.foursquare.api.local.KnownGroupTypes;
+import com.chiriacd.venuefinder.foursquare.translation.KnownGroupTypes;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -39,7 +40,7 @@ public class FoursquareServiceWrapperTests {
     private VenueRecommendations.Response venueRecommendationsResponse;
     private Group recommendedGroup;
     private Group otherGroup;
-    private GroupItem.Venue venue;
+    private Venue venue;
     private GroupItem recommendedGroupItem;
 
     private FoursquareServiceWrapper serviceWrapper;
@@ -61,6 +62,8 @@ public class FoursquareServiceWrapperTests {
         otherGroupList.add(otherGroupItem);
 
         when(recommendedGroupItem.getVenue()).thenReturn(venue);
+        String expectedVenueName = "expectedVenue";
+        when(venue.getName()).thenReturn(expectedVenueName);
 
         when(recommendedGroup.getItems()).thenReturn(recommendedGroupItemList);
         when(recommendedGroup.getName()).thenReturn(KnownGroupTypes.RECOMMENDED.value);
@@ -73,7 +76,7 @@ public class FoursquareServiceWrapperTests {
         serviceWrapper.getVenuesByType("anything", KnownGroupTypes.RECOMMENDED)
                 .test()
                 .assertNoErrors()
-                .assertValue(venues -> venues.size() == 1 && venues.get(0).equals(venue));
+                .assertValue(venues -> venues.size() == 1 && venues.get(0).getName().equals(expectedVenueName));
     }
 
     @Test
@@ -107,7 +110,7 @@ public class FoursquareServiceWrapperTests {
         venueRecommendationsResponse = Mockito.mock(VenueRecommendations.Response.class);
         recommendedGroup = Mockito.mock(Group.class);
         otherGroup = Mockito.mock(Group.class);
-        venue = Mockito.mock(GroupItem.Venue.class);
+        venue = Mockito.mock(Venue.class);
         recommendedGroupItem = Mockito.mock(GroupItem.class);
         otherGroupItem = Mockito.mock(GroupItem.class);
         when(venueRecommendations.getResponse()).thenReturn(venueRecommendationsResponse);

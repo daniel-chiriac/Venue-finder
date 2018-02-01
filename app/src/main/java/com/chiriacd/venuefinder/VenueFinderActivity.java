@@ -12,8 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chiriacd.venuefinder.foursquare.FoursquareServiceWrapper;
-import com.chiriacd.venuefinder.foursquare.api.GroupItem;
-import com.chiriacd.venuefinder.foursquare.api.local.KnownGroupTypes;
+import com.chiriacd.venuefinder.foursquare.translation.KnownGroupTypes;
+import com.chiriacd.venuefinder.foursquare.translation.VenueWrapper;
 import com.chiriacd.venuefinder.helpers.RxFilters;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -65,7 +65,7 @@ public class VenueFinderActivity extends Activity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        ArrayList<GroupItem.Venue> venues = savedInstanceState.getParcelableArrayList(VENUES_KEY);
+        ArrayList<VenueWrapper> venues = savedInstanceState.getParcelableArrayList(VENUES_KEY);
         String location = savedInstanceState.getString(LOCATION_KEY);
         venuesAdapter.setData(location, venues);
     }
@@ -168,7 +168,7 @@ public class VenueFinderActivity extends Activity {
 
     //region Data processing
 
-    private void onItemsRetrieved(String location, List<GroupItem.Venue> venues) {
+    private void onItemsRetrieved(String location, List<VenueWrapper> venues) {
         onFinishLoading();
         venuesAdapter.setData(location, venues);
         Log.i(TAG, "items received");

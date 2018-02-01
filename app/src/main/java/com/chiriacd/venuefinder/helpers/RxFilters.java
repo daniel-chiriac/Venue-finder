@@ -2,7 +2,7 @@ package com.chiriacd.venuefinder.helpers;
 
 
 import com.chiriacd.venuefinder.foursquare.api.Group;
-import com.chiriacd.venuefinder.foursquare.api.local.KnownGroupTypes;
+import com.chiriacd.venuefinder.foursquare.translation.KnownGroupTypes;
 
 public class RxFilters {
 

@@ -1,12 +1,14 @@
 package com.chiriacd.venuefinder;
 
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.chiriacd.venuefinder.foursquare.api.GroupItem;
+import com.chiriacd.venuefinder.foursquare.translation.VenueWrapper;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 
 public class RecommendedVenuesAdapter extends RecyclerView.Adapter<RecommendedVenuesAdapter.VenuesViewHolder> {
 
-    private List<GroupItem.Venue> venues;
+    private List<VenueWrapper> venues;
     private String location;
 
     public RecommendedVenuesAdapter() {
@@ -22,13 +24,13 @@ public class RecommendedVenuesAdapter extends RecyclerView.Adapter<RecommendedVe
         venues = new ArrayList<>();
     }
 
-    public void setData(String location, List<GroupItem.Venue> venues) {
+    public void setData(String location, List<VenueWrapper> venues) {
         this.location = location;
         this.venues = venues;
         notifyDataSetChanged();
     }
 
-    public List<GroupItem.Venue> getData() {
+    public List<VenueWrapper> getData() {
         return venues;
     }
 
@@ -61,16 +63,19 @@ public class RecommendedVenuesAdapter extends RecyclerView.Adapter<RecommendedVe
 
         TextView ratingView;
         TextView nameView;
+        SimpleDraweeView icon;
 
         public VenuesViewHolder(View itemView) {
             super(itemView);
             ratingView = itemView.findViewById(R.id.rating);
             nameView = itemView.findViewById(R.id.venue_name);
+            icon = itemView.findViewById(R.id.icon);//Fresco handles recycling
         }
 
-        public void bind(GroupItem.Venue venue) {
+        public void bind(VenueWrapper venue) {
             ratingView.setText(String.valueOf(venue.getRating()));
             nameView.setText(venue.getName());
+            icon.setImageURI(Uri.parse(venue.getIconUrl()));
         }
     }
 }

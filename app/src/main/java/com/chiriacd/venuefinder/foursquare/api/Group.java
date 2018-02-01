@@ -5,15 +5,15 @@ import java.util.List;
 
 public class Group {
 
-    String type;
+    private String type;
 
     /**
      * The role of type and name seems to be reversed, in contrast with documentation.
      * We will use name to check for the type of group, while type will contain human readable name.
      */
-    String name;
+    private String name;
 
-    List<GroupItem> items;
+    private List<GroupItem> items;
 
     public List<GroupItem> getItems() {
         return items;
