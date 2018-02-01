@@ -52,6 +52,7 @@ public class RecommendedVenuesAdapter extends RecyclerView.Adapter<RecommendedVe
 
     public void clear() {
         venues.clear();
+        location = "";
         notifyDataSetChanged();
     }
 

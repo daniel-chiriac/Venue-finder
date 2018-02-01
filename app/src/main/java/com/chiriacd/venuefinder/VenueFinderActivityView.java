@@ -29,7 +29,7 @@ public class VenueFinderActivityView implements Disposable {
     private CompositeDisposable compositeDisposable;
 
     @Inject
-    public VenueFinderActivityView (VenueFinderActivity activity) {
+    public VenueFinderActivityView(VenueFinderActivity activity) {
         compositeDisposable = new CompositeDisposable();
         initUI(activity);
     }
@@ -70,20 +70,22 @@ public class VenueFinderActivityView implements Disposable {
     }
 
     private void onStartLoading() {
-        venuesAdapter.clear();
         loadingIndicator.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.INVISIBLE);
         hideNoResultsView();
     }
 
-    private void onFinishLoading() {
+    public void onFinishLoading() {
         loadingIndicator.setVisibility(View.INVISIBLE);
         recyclerView.setVisibility(View.VISIBLE);
     }
 
     private void onLocationValueChanged(CharSequence c) {
-        if (c != null && c.length() > 0) {
+        if (c != null && c.length() > 0 && !c.toString().equals(getDisplayedLocation())) {
             onStartLoading();
+        } else if (c == null || c.length() == 0) {
+            venuesAdapter.clear();
+            onFinishLoading();
         } else {
             onFinishLoading();
         }
@@ -100,9 +102,10 @@ public class VenueFinderActivityView implements Disposable {
 
     /**
      * it is a bit odd for data to be stored in views, but will keep here for now
+     *
      * @return
      */
-    public List<VenueWrapper> getDisplayedVenues () {
+    public List<VenueWrapper> getDisplayedVenues() {
         return venuesAdapter.getData();
     }
 
