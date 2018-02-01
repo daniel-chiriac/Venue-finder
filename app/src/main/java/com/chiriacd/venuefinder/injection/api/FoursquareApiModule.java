@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.chiriacd.venuefinder.BuildConfig;
 import com.chiriacd.venuefinder.foursquare.FoursquareService;
+import com.chiriacd.venuefinder.foursquare.FoursquareServiceWrapper;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import dagger.Module;
@@ -42,7 +43,8 @@ public class FoursquareApiModule {
         return httpClient.build();
     }
 
-    @Provides Cache cache(Context context) {
+    @Provides
+    Cache cache(Context context) {
         return new Cache(context.getCacheDir(), cacheSize);
     }
 
@@ -67,7 +69,12 @@ public class FoursquareApiModule {
     }
 
     @Provides
-    public FoursquareService provideFoursquareService (Retrofit retrofit) {
+    public FoursquareService provideFoursquareService(Retrofit retrofit) {
         return retrofit.create(FoursquareService.class);
+    }
+
+    @Provides
+    FoursquareServiceWrapper provideFoursquareServiceWrapper(FoursquareService service) {
+        return new FoursquareServiceWrapper(service);
     }
 }

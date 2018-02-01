@@ -11,10 +11,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.chiriacd.venuefinder.foursquare.FoursquareService;
-import com.chiriacd.venuefinder.foursquare.api.Group;
+import com.chiriacd.venuefinder.foursquare.FoursquareServiceWrapper;
 import com.chiriacd.venuefinder.foursquare.api.GroupItem;
-import com.chiriacd.venuefinder.foursquare.api.VenueRecommendations;
 import com.chiriacd.venuefinder.foursquare.api.local.KnownGroupTypes;
 import com.chiriacd.venuefinder.helpers.RxFilters;
 import com.jakewharton.rxbinding2.widget.RxTextView;
@@ -38,8 +36,7 @@ public class VenueFinderActivity extends Activity {
     private static final String VENUES_KEY = "venues";
     private static final String LOCATION_KEY = "location";
 
-    @Inject
-    FoursquareService foursquareService;
+    @Inject FoursquareServiceWrapper foursquareService;
 
     private EditText locationEditText;
     private TextView noResultsView;
@@ -156,17 +153,8 @@ public class VenueFinderActivity extends Activity {
 
     private void getVenuesByLocation(final String location) {
         compositeDisposable.add(
-                foursquareService.getRecommendedVenues(location)
+                foursquareService.getVenuesByType(location, KnownGroupTypes.RECOMMENDED)
                         .observeOn(AndroidSchedulers.mainThread())
-                        .map(VenueRecommendations::getResponse)
-                        .filter(response -> response != null)
-                        .map(VenueRecommendations.Response::getGroups)
-                        .flatMapIterable(groupList -> groupList)
-                        .filter(group -> RxFilters.filterGroupByType(group, KnownGroupTypes.RECOMMENDED))
-                        .map(Group::getItems)
-                        .flatMapIterable(item -> item)
-                        .map(item -> item.venue)
-                        .toList()
                         .onErrorReturn(throwable -> {
                             onVenueRetrievingError();
                             return Collections.emptyList();

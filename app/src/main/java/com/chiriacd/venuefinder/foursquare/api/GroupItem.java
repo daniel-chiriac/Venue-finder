@@ -6,7 +6,11 @@ import android.os.Parcelable;
 
 public class GroupItem {
 
-    public Venue venue;
+    Venue venue;
+
+    public Venue getVenue() {
+        return venue;
+    }
 
     public static class Venue implements Parcelable {
 
