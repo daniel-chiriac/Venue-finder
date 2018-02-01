@@ -27,7 +27,7 @@ public class Icon implements Parcelable {
     }
 
     public enum Background {
-        DEFAULT(""), GREY("_bg");
+        DEFAULT(""), GREY("bg_");
 
         public final String value;
 
