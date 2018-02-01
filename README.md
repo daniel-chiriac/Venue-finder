@@ -12,3 +12,4 @@ client_secret="GSNGKJSNRKGJNSKGJRNSJGNSJGNKSJRK3UEJYKXVZ4"
 
 To just run the app, install the apk in the release directory.
 
+To obtain a client_id and client_secret you need to create a [foursquare developer account](https://developer.foursquare.com).
