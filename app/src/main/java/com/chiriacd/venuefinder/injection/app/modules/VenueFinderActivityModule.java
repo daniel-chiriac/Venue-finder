@@ -1,8 +1,9 @@
-package com.chiriacd.venuefinder.injection.app;
+package com.chiriacd.venuefinder.injection.app.modules;
 
 import android.app.Activity;
 
 import com.chiriacd.venuefinder.VenueFinderActivity;
+import com.chiriacd.venuefinder.injection.app.VenueFinderActivitySubcomponent;
 
 import dagger.Binds;
 import dagger.Module;

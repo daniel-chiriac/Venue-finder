@@ -1,21 +1,14 @@
 package com.chiriacd.venuefinder;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.chiriacd.venuefinder.foursquare.FoursquareServiceWrapper;
 import com.chiriacd.venuefinder.foursquare.translation.KnownGroupTypes;
 import com.chiriacd.venuefinder.foursquare.translation.VenueWrapper;
 import com.chiriacd.venuefinder.helpers.RxFilters;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,12 +30,7 @@ public class VenueFinderActivity extends Activity {
     private static final String LOCATION_KEY = "location";
 
     @Inject FoursquareServiceWrapper foursquareService;
-
-    private EditText locationEditText;
-    private TextView noResultsView;
-    private RecyclerView recyclerView;
-    private RecommendedVenuesAdapter venuesAdapter;
-    private View loadingIndicator;
+    @Inject VenueFinderActivityView venueFinderActivityView;
 
     private CompositeDisposable compositeDisposable;
 
@@ -51,15 +39,15 @@ public class VenueFinderActivity extends Activity {
         super.onCreate(savedInstanceState);
         AndroidInjection.inject(this);
         initRx();
-        initUI(this);
         setupViewListeners();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(VENUES_KEY, new ArrayList<>(venuesAdapter.getData()));
-        outState.putString(LOCATION_KEY, venuesAdapter.getLocation());
+        List<VenueWrapper> displayedVenues = venueFinderActivityView.getDisplayedVenues();
+        outState.putParcelableArrayList(VENUES_KEY, new ArrayList<>(displayedVenues));
+        outState.putString(LOCATION_KEY, venueFinderActivityView.getDisplayedLocation());
     }
 
     @Override
@@ -67,7 +55,7 @@ public class VenueFinderActivity extends Activity {
         super.onRestoreInstanceState(savedInstanceState);
         ArrayList<VenueWrapper> venues = savedInstanceState.getParcelableArrayList(VENUES_KEY);
         String location = savedInstanceState.getString(LOCATION_KEY);
-        venuesAdapter.setData(location, venues);
+        venueFinderActivityView.updateVenues(location, venues);
     }
 
     @Override
@@ -76,87 +64,27 @@ public class VenueFinderActivity extends Activity {
         compositeDisposable.clear();
     }
 
-    //region Setup/Init
-
     private void initRx() {
         compositeDisposable = new CompositeDisposable();
-    }
-
-    private void initUI(Context context) {
-        setContentView(R.layout.venuefinder_activity);
-        loadingIndicator = findViewById(R.id.loading_indicator);
-        locationEditText = findViewById(R.id.place_input);
-        noResultsView = findViewById(R.id.no_results_view);
-
-        venuesAdapter = new RecommendedVenuesAdapter();
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(venuesAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        compositeDisposable.add(venueFinderActivityView);
     }
 
     private void setupViewListeners() {
         compositeDisposable.add(
-                RxTextView.textChanges(locationEditText)
-                        .skip(2) //skip value on rotation; for some reason,
-                        // when using skip(1) or skipInitialValue() it doesn't skip
-                        .doOnNext(this::onLocationValueChanged)
+                venueFinderActivityView.getTextChangesObservable()
                         .debounce(2, TimeUnit.SECONDS)
                         .filter(RxFilters::filterNonEmpty)
                         .map(CharSequence::toString)
-                        .filter(s -> !s.equals(venuesAdapter.getLocation()))
+                        .filter(s -> !s.equals(venueFinderActivityView.getDisplayedLocation()))
                         .subscribe(this::getVenuesByLocation));
     }
-    //endregion
-
-    //region User Interaction
-
-    private void onLocationValueChanged(CharSequence c) {
-        if (c != null && c.length() > 0) {
-            onStartLoading();
-        } else {
-            onFinishLoading();
-        }
-    }
-
-    //endregion
-
-    //region User Interface
-    private void onVenueRetrievingError() {
-        onFinishLoading();
-        showNoResultsView();
-    }
-
-    private void showNoResultsView() {
-        noResultsView.setVisibility(View.VISIBLE);
-        loadingIndicator.setVisibility(View.INVISIBLE);
-    }
-
-    private void hideNoResultsView() {
-        noResultsView.setVisibility(View.INVISIBLE);
-    }
-
-    private void onStartLoading() {
-        venuesAdapter.clear();
-        loadingIndicator.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.INVISIBLE);
-        hideNoResultsView();
-    }
-
-    private void onFinishLoading() {
-        loadingIndicator.setVisibility(View.INVISIBLE);
-        recyclerView.setVisibility(View.VISIBLE);
-    }
-
-    //endregion
-
-    //region Network Methods
 
     private void getVenuesByLocation(final String location) {
         compositeDisposable.add(
                 foursquareService.getVenuesByType(location, KnownGroupTypes.RECOMMENDED)
                         .observeOn(AndroidSchedulers.mainThread())
                         .onErrorReturn(throwable -> {
-                            onVenueRetrievingError();
+                            venueFinderActivityView.onVenueRetrievingError();
                             return Collections.emptyList();
                         })
                         .doOnSuccess(venues -> onItemsRetrieved(location, venues))
@@ -164,15 +92,8 @@ public class VenueFinderActivity extends Activity {
                         .subscribe());
     }
 
-    //endregion
-
-    //region Data processing
-
     private void onItemsRetrieved(String location, List<VenueWrapper> venues) {
-        onFinishLoading();
-        venuesAdapter.setData(location, venues);
+        venueFinderActivityView.updateVenues(location, venues);
         Log.i(TAG, "items received");
     }
-
-    //endregion
 }
